@@ -4,11 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlyingScreen"
+        xmlns:uc="clr-namespace:FlyingScreen.UC" WindowState="Maximized" WindowStyle="None" 
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.Background>
-            <ImageBrush  ImageSource="pac"/>
+            <ImageBrush ImageSource="pack://siteoforigin:,,,/Image/主图背景.png"/>
         </Grid.Background>
+        <uc:UCThird/>
     </Grid>
 </Window>
