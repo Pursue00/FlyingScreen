@@ -9,6 +9,10 @@
     <UserControl.Resources>
         <Style TargetType="Button">
             <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="70"/>
+        </Style>
+        <Style TargetType="Button" x:Key="btnPopStyle">
+            <Setter Property="Width" Value="100"/>
             <Setter Property="Height" Value="40"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="tbStyle">
@@ -24,8 +28,8 @@
         </Grid.Background>
         <Border BorderThickness="1" BorderBrush="#ffffff" 
                 HorizontalAlignment="Left" VerticalAlignment="Bottom">
-            <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding BtnCommand}" CommandParameter="exit">
+            <StackPanel Orientation="Horizontal" >
+                <Button Command="{Binding BtnCommand}" CommandParameter="exit" >
                     <Button.Template>
                         <ControlTemplate>
                             <Grid>
@@ -111,9 +115,9 @@
                     </Button.Template>
                 </Button>
                 <Popup Placement="Top" PlacementTarget="{Binding ElementName=btnRank}" AllowsTransparency="True"
-                   PopupAnimation="Fade" IsOpen="True" StaysOpen="False">
+                   PopupAnimation="Fade" IsOpen="{Binding IsVisibilityRank}" StaysOpen="False">
                     <StackPanel>
-                        <Button>
+                        <Button Style="{StaticResource btnPopStyle}">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
@@ -123,7 +127,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button>
+                        <Button Style="{StaticResource btnPopStyle}">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
@@ -133,7 +137,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button>
+                        <Button Style="{StaticResource btnPopStyle}">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
@@ -143,7 +147,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button>
+                        <Button Style="{StaticResource btnPopStyle}">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
@@ -153,7 +157,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button>
+                        <Button Style="{StaticResource btnPopStyle}">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
@@ -166,9 +170,9 @@
                     </StackPanel>
                 </Popup>
                 <Popup Placement="Top" PlacementTarget="{Binding ElementName=btnSetting}" AllowsTransparency="True"
-                   PopupAnimation="Fade" IsOpen="True" StaysOpen="False">
+                   PopupAnimation="Fade" IsOpen="{Binding IsVisibilitySetting}" StaysOpen="False">
                     <StackPanel>
-                        <Button>
+                        <Button Style="{StaticResource btnPopStyle}">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
@@ -178,7 +182,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button>
+                        <Button Style="{StaticResource btnPopStyle}">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
@@ -188,7 +192,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button>
+                        <Button Style="{StaticResource btnPopStyle}"> 
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
@@ -198,7 +202,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button>
+                        <Button Style="{StaticResource btnPopStyle}">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
@@ -208,7 +212,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button>
+                        <Button Style="{StaticResource btnPopStyle}">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
@@ -218,7 +222,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button>
+                        <Button Style="{StaticResource btnPopStyle}">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
@@ -228,7 +232,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button>
+                        <Button Style="{StaticResource btnPopStyle}">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
@@ -242,5 +246,50 @@
                 </Popup>
             </StackPanel>
         </Border>
+        <Grid HorizontalAlignment="Right" VerticalAlignment="Center" MinHeight="250" MinWidth="100">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.5*"/>
+            </Grid.ColumnDefinitions>
+            <ListBox MinHeight="200" MinWidth="100" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <ListBox.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Image/软件文档底图.png"/>
+                </ListBox.Background>
+            </ListBox>
+            <Grid Grid.Column="1">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Style="{StaticResource btnPopStyle}" Height="50">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <Image Source="pack://siteoforigin:,,,/Image/缩略图按钮.png" Stretch="Uniform"/>
+                                    <TextBlock Text="上一张" Style="{StaticResource tbStyle}"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Style="{StaticResource btnPopStyle}" Width="100" Height="80">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <Image Source="pack://siteoforigin:,,,/Image/缩略图按钮.png" Stretch="Uniform"/>
+                                    <TextBlock Text="缩略图" Style="{StaticResource tbStyle}"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Style="{StaticResource btnPopStyle}" Height="50">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <Image Source="pack://siteoforigin:,,,/Image/缩略图按钮.png" Stretch="Uniform"/>
+                                    <TextBlock Text="下一张" Style="{StaticResource tbStyle}"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

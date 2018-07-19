@@ -12,6 +12,7 @@
         <Grid.Background>
             <ImageBrush ImageSource="pack://siteoforigin:,,,/Image/主图背景.png"/>
         </Grid.Background>
-        <uc:UCThird/>
+        <uc:CoolButton/>
+        <uc:UCThird Visibility="Visible"/>
     </Grid>
 </Window>

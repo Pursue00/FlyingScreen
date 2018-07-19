@@ -22,6 +22,15 @@ namespace FlyingScreen.UC
             set { _isVisibilityRank = value; OnPropertyChanged(() => IsVisibilityRank); }
         }
 
+        private bool _isVisibilitySetting;
+
+        public bool IsVisibilitySetting
+        {
+            get { return _isVisibilitySetting; }
+            set { _isVisibilitySetting = value; OnPropertyChanged(() => IsVisibilitySetting); }
+        }
+
+
         #endregion
 
         #region Constructure
@@ -52,7 +61,7 @@ namespace FlyingScreen.UC
                     this.IsVisibilityRank = true;
                     break;
                 case "setting":
-                    this.IsVisibilityRank = true;
+                    this.IsVisibilitySetting = true;
                     break;
                 case "clear":
                     this.IsVisibilityRank = true;
