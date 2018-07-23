@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlyingScreen.Common.SendMessageHelper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace FlyingScreen
         public MainWindow()
         {
             InitializeComponent();
+            EventHub.SysEvents.SubEvent<AppMessage>(OnRecMsg, Prism.Events.ThreadOption.UIThread);
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -30,6 +32,18 @@ namespace FlyingScreen
             if (e.Key == Key.Escape)
             {
                 this.Close();
+            }
+        }
+        private void OnRecMsg(AppMessage appMessage)
+        {
+            if (appMessage.MsgType == AppMsg.FileType)
+            {
+                this.ucthird.Visibility = Visibility.Visible;
+            }
+            else if (appMessage.MsgType == AppMsg.Palm)
+            {
+                
+                this.coolbtn.Visibility = Visibility.Visible;
             }
         }
     }

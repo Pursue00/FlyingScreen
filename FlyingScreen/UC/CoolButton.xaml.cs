@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlyingScreen.Common.SendMessageHelper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -87,7 +88,16 @@ namespace FlyingScreen.UC
 
         private void CoolButton_Loaded(object sender, RoutedEventArgs e)
         {
+            //注册帧动画
+            CompositionTarget.Rendering += CompositionTarget_Rendering;
             InitStar();
+        }
+
+        private void CompositionTarget_Rendering(object sender, EventArgs e)
+        {
+            StarRoamAnimation();
+            AddOrRemoveStarLine();
+            MoveStarLine();
         }
 
         /// <summary>
@@ -116,15 +126,15 @@ namespace FlyingScreen.UC
                 ImageBrush imageBrush = new ImageBrush();
                 imageBrush.ImageSource = new BitmapImage(new Uri("Image/单独不按按钮.png", UriKind.Relative));
                 EllipseGeometry ellipseGeometry = new EllipseGeometry();
-                ellipseGeometry.Center = new Point(50, 50);
-                ellipseGeometry.RadiusX = 40;
-                ellipseGeometry.RadiusY = 40;
+                ellipseGeometry.Center = new Point(100, 100);
+                ellipseGeometry.RadiusX = 80;
+                ellipseGeometry.RadiusY = 80;
                 Button star = new Button()
                 {
                     Content = fileType[i],
                     Background = imageBrush,
-                    Width = 100,
-                    Height = 100,
+                    Width = 200,
+                    Height = 200,
                     Clip = ellipseGeometry,
                     RenderTransformOrigin = new Point(0.5, 0.5),
                     RenderTransform = new RotateTransform() { Angle = 0 }
@@ -148,6 +158,9 @@ namespace FlyingScreen.UC
             imageBrush.ImageSource = new BitmapImage(new Uri("Image/单独按下按钮.png", UriKind.Relative));
             Button star = sender as Button;
             star.Background = imageBrush;
+            AppMessage appMessage = new AppMessage();
+            appMessage.MsgType = AppMsg.FileType;
+            EventHub.SysEvents.PubEvent(appMessage);
         }
 
         /// <summary>
@@ -331,8 +344,8 @@ namespace FlyingScreen.UC
             {
                 GradientStops = new GradientStopCollection()
                 {
-                    new GradientStop() { Offset=0,Color=(Brushes.Red as SolidColorBrush).Color},
-                    new GradientStop() { Offset=1,Color=(Brushes.Red as SolidColorBrush).Color}
+                    new GradientStop() { Offset=0,Color=(Brushes.White as SolidColorBrush).Color},
+                    new GradientStop() { Offset=1,Color=(Brushes.White as SolidColorBrush).Color}
                 }
             };
         }

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
              xmlns:local="clr-namespace:FlyingScreen.UC"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -70,6 +71,37 @@
                     </Button.Template>
                 </Button>
             </StackPanel>
+        </Border>
+        <Border BorderThickness="1" BorderBrush="#ffffff" 
+                HorizontalAlignment="Center"  VerticalAlignment="Bottom">
+            <ListBox x:Name="listBoxview" ItemsSource="{Binding SignBrowseSource}"  Style="{StaticResource template}"
+                  ItemContainerStyle="{StaticResource itemTemplate}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseUp">
+                        <i:InvokeCommandAction Command="{Binding DataContext.SelectedPageCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl},AncestorLevel=1}}" 
+                                                   CommandParameter="{Binding ElementName=listBoxview}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <!--<ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <cv:Slider/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>-->
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Border Name="border" Width="200" Height="200" CornerRadius="5" BorderBrush="Transparent" BorderThickness="1" Margin="10">
+                                <Image Source="{Binding CameraSource}" Stretch="Fill"  Width="{Binding Width}"  Height="{Binding Height}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="0"/>
+                            </Border>
+                        </Grid>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBoxItem},Path=IsSelected}" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="Red"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Border>
         <Border BorderThickness="1" BorderBrush="#ffffff" 
                 HorizontalAlignment="Right"  VerticalAlignment="Bottom">

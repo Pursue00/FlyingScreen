@@ -9,10 +9,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid.Background>
-            <ImageBrush ImageSource="pack://siteoforigin:,,,/Image/主图背景.png"/>
-        </Grid.Background>
-        <uc:CoolButton/>
-        <uc:UCThird Visibility="Visible"/>
+        <uc:PalmView x:Name="palmview"/>
+        <uc:CoolButton x:Name="coolbtn" Visibility="Collapsed"/>
+        <uc:UCThird x:Name="ucthird" Visibility="Collapsed"/>
     </Grid>
 </Window>
