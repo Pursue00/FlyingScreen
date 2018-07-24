@@ -27,301 +27,316 @@
         <Grid.Background>
             <ImageBrush ImageSource="pack://siteoforigin:,,,/Image/背景.png"/>
         </Grid.Background>
-        <Border BorderThickness="1" BorderBrush="#ffffff" 
-                HorizontalAlignment="Left" VerticalAlignment="Bottom">
-            <StackPanel Orientation="Horizontal" >
-                <Button Command="{Binding BtnCommand}" CommandParameter="exit" >
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Grid>
-                                <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
-                                <TextBlock Text="退出" Style="{StaticResource tbStyle}"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Button Command="{Binding BtnCommand}" CommandParameter="rotate">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Grid>
-                                <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
-                                <TextBlock Text="旋转" Style="{StaticResource tbStyle}"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Button Command="{Binding BtnCommand}" CommandParameter="recycling">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Grid>
-                                <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
-                                <TextBlock Text="回收" Style="{StaticResource tbStyle}"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Button Command="{Binding BtnCommand}" CommandParameter="history">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Grid>
-                                <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
-                                <TextBlock Text="历史" Style="{StaticResource tbStyle}"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-            </StackPanel>
-        </Border>
-        <Border BorderThickness="1" BorderBrush="#ffffff" 
-                HorizontalAlignment="Center"  VerticalAlignment="Bottom">
-            <ListBox x:Name="listBoxview" ItemsSource="{Binding SignBrowseSource}"  Style="{StaticResource template}"
-                  ItemContainerStyle="{StaticResource itemTemplate}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseUp">
-                        <i:InvokeCommandAction Command="{Binding DataContext.SelectedPageCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl},AncestorLevel=1}}" 
-                                                   CommandParameter="{Binding ElementName=listBoxview}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <!--<ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <cv:Slider/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>-->
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Border Name="border" Width="200" Height="200" CornerRadius="5" BorderBrush="Transparent" BorderThickness="1" Margin="10">
-                                <Image Source="{Binding CameraSource}" Stretch="Fill"  Width="{Binding Width}"  Height="{Binding Height}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="0"/>
-                            </Border>
-                        </Grid>
-                        <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBoxItem},Path=IsSelected}" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="Red"/>
-                            </DataTrigger>
-                        </DataTemplate.Triggers>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Border>
-        <Border BorderThickness="1" BorderBrush="#ffffff" 
-                HorizontalAlignment="Right"  VerticalAlignment="Bottom">
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="btnRank" Command="{Binding BtnCommand}" CommandParameter="rank">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Grid>
-                                <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
-                                <TextBlock Text="行列" Style="{StaticResource tbStyle}"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Button x:Name="btnSetting" Command="{Binding BtnCommand}" CommandParameter="setting">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Grid>
-                                <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
-                                <TextBlock Text="设置" Style="{StaticResource tbStyle}"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Button Command="{Binding BtnCommand}" CommandParameter="clear">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Grid>
-                                <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
-                                <TextBlock Text="清屏" Style="{StaticResource tbStyle}"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Button Command="{Binding BtnCommand}" CommandParameter="return">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Grid>
-                                <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
-                                <TextBlock Text="返回" Style="{StaticResource tbStyle}"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Popup Placement="Top" PlacementTarget="{Binding ElementName=btnRank}" AllowsTransparency="True"
-                   PopupAnimation="Fade" IsOpen="{Binding IsVisibilityRank}" StaysOpen="False">
-                    <StackPanel>
-                        <Button Style="{StaticResource btnPopStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid HorizontalAlignment="Right" VerticalAlignment="Center" MinHeight="250" MinWidth="100">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+                <ListBox MinHeight="200" MinWidth="100" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <ListBox.Background>
+                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Image/软件文档底图.png"/>
+                    </ListBox.Background>
+                </ListBox>
+                <Grid Grid.Column="1">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button Style="{StaticResource btnPopStyle}" Height="50">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
-                                        <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
-                                        <TextBlock Text="满屏" Style="{StaticResource tbStyle}"/>
+                                        <Image Source="pack://siteoforigin:,,,/Image/缩略图按钮.png" Stretch="Uniform"/>
+                                        <TextBlock Text="上一张" Style="{StaticResource tbStyle}"/>
                                     </Grid>
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button Style="{StaticResource btnPopStyle}">
+                        <Button Style="{StaticResource btnPopStyle}" Width="100" Height="80">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
-                                        <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
-                                        <TextBlock Text="删除" Style="{StaticResource tbStyle}"/>
+                                        <Image Source="pack://siteoforigin:,,,/Image/缩略图按钮.png" Stretch="Uniform"/>
+                                        <TextBlock Text="缩略图" Style="{StaticResource tbStyle}"/>
                                     </Grid>
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button Style="{StaticResource btnPopStyle}">
+                        <Button Style="{StaticResource btnPopStyle}" Height="50">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
-                                        <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
-                                        <TextBlock Text="合并" Style="{StaticResource tbStyle}"/>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                        <Button Style="{StaticResource btnPopStyle}">
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
-                                        <TextBlock Text="拆分" Style="{StaticResource tbStyle}"/>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                        <Button Style="{StaticResource btnPopStyle}">
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
-                                        <TextBlock Text="行列" Style="{StaticResource tbStyle}"/>
+                                        <Image Source="pack://siteoforigin:,,,/Image/缩略图按钮.png" Stretch="Uniform"/>
+                                        <TextBlock Text="下一张" Style="{StaticResource tbStyle}"/>
                                     </Grid>
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
                     </StackPanel>
-                </Popup>
-                <Popup Placement="Top" PlacementTarget="{Binding ElementName=btnSetting}" AllowsTransparency="True"
-                   PopupAnimation="Fade" IsOpen="{Binding IsVisibilitySetting}" StaysOpen="False">
-                    <StackPanel>
-                        <Button Style="{StaticResource btnPopStyle}">
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
-                                        <TextBlock Text="静音" Style="{StaticResource tbStyle}"/>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                        <Button Style="{StaticResource btnPopStyle}">
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
-                                        <TextBlock Text="音量" Style="{StaticResource tbStyle}"/>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                        <Button Style="{StaticResource btnPopStyle}"> 
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
-                                        <TextBlock Text="扫一扫" Style="{StaticResource tbStyle}"/>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                        <Button Style="{StaticResource btnPopStyle}">
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
-                                        <TextBlock Text="二维码" Style="{StaticResource tbStyle}"/>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                        <Button Style="{StaticResource btnPopStyle}">
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
-                                        <TextBlock Text="特效" Style="{StaticResource tbStyle}"/>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                        <Button Style="{StaticResource btnPopStyle}">
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
-                                        <TextBlock Text="IP地址" Style="{StaticResource tbStyle}"/>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                        <Button Style="{StaticResource btnPopStyle}">
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
-                                        <TextBlock Text="换背景" Style="{StaticResource tbStyle}"/>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                    </StackPanel>
-                </Popup>
-            </StackPanel>
-        </Border>
-        <Grid HorizontalAlignment="Right" VerticalAlignment="Center" MinHeight="250" MinWidth="100">
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.5*"/>
-                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.3*"/>
             </Grid.ColumnDefinitions>
-            <ListBox MinHeight="200" MinWidth="100" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <ListBox.Background>
-                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Image/软件文档底图.png"/>
-                </ListBox.Background>
-            </ListBox>
-            <Grid Grid.Column="1">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Button Style="{StaticResource btnPopStyle}" Height="50">
+            <Border BorderThickness="1" BorderBrush="#ffffff" 
+                Grid.Column="0">
+                <StackPanel Orientation="Horizontal" >
+                    <Button Command="{Binding BtnCommand}" CommandParameter="exit" >
                         <Button.Template>
                             <ControlTemplate>
                                 <Grid>
-                                    <Image Source="pack://siteoforigin:,,,/Image/缩略图按钮.png" Stretch="Uniform"/>
-                                    <TextBlock Text="上一张" Style="{StaticResource tbStyle}"/>
+                                    <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
+                                    <TextBlock Text="退出" Style="{StaticResource tbStyle}"/>
                                 </Grid>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button Style="{StaticResource btnPopStyle}" Width="100" Height="80">
+                    <Button Command="{Binding BtnCommand}" CommandParameter="rotate">
                         <Button.Template>
                             <ControlTemplate>
                                 <Grid>
-                                    <Image Source="pack://siteoforigin:,,,/Image/缩略图按钮.png" Stretch="Uniform"/>
-                                    <TextBlock Text="缩略图" Style="{StaticResource tbStyle}"/>
+                                    <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
+                                    <TextBlock Text="旋转" Style="{StaticResource tbStyle}"/>
                                 </Grid>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button Style="{StaticResource btnPopStyle}" Height="50">
+                    <Button Command="{Binding BtnCommand}" CommandParameter="recycling">
                         <Button.Template>
                             <ControlTemplate>
                                 <Grid>
-                                    <Image Source="pack://siteoforigin:,,,/Image/缩略图按钮.png" Stretch="Uniform"/>
-                                    <TextBlock Text="下一张" Style="{StaticResource tbStyle}"/>
+                                    <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
+                                    <TextBlock Text="回收" Style="{StaticResource tbStyle}"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Command="{Binding BtnCommand}" CommandParameter="history">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
+                                    <TextBlock Text="历史" Style="{StaticResource tbStyle}"/>
                                 </Grid>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
                 </StackPanel>
-            </Grid>
+            </Border>
+            <Border BorderThickness="1" BorderBrush="#ffffff" Grid.Column="1"
+                >
+                <ListBox x:Name="listBoxview" 
+                     ItemsSource="{Binding SignBrowseSource}"  Style="{StaticResource template}"
+                  ItemContainerStyle="{StaticResource itemTemplate}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseUp">
+                            <i:InvokeCommandAction Command="{Binding DataContext.SelectedPageCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl},AncestorLevel=1}}" 
+                                                   CommandParameter="{Binding ElementName=listBoxview}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <!--<ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <cv:Slider/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>-->
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Border Name="border" Width="20"  Height="20" CornerRadius="5" BorderBrush="Transparent" BorderThickness="1" Margin="10">
+                                    <Image Source="{Binding CameraSource}" Stretch="Fill"  Width="{Binding Width}"  Height="{Binding Height}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="0"/>
+                                </Border>
+                            </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBoxItem},Path=IsSelected}" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="Red"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+            <Border BorderThickness="1" BorderBrush="#ffffff" 
+                Grid.Column="2">
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="btnRank" Command="{Binding BtnCommand}" CommandParameter="rank">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
+                                    <TextBlock Text="行列" Style="{StaticResource tbStyle}"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button x:Name="btnSetting" Command="{Binding BtnCommand}" CommandParameter="setting">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
+                                    <TextBlock Text="设置" Style="{StaticResource tbStyle}"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Command="{Binding BtnCommand}" CommandParameter="clear">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
+                                    <TextBlock Text="清屏" Style="{StaticResource tbStyle}"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Command="{Binding BtnCommand}" CommandParameter="return">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <Image Source="pack://siteoforigin:,,,/Image/底部单独按钮.png" Stretch="Uniform"/>
+                                    <TextBlock Text="返回" Style="{StaticResource tbStyle}"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Popup Placement="Top" PlacementTarget="{Binding ElementName=btnRank}" AllowsTransparency="True"
+                   PopupAnimation="Fade" IsOpen="{Binding IsVisibilityRank}" StaysOpen="False">
+                        <StackPanel>
+                            <Button Style="{StaticResource btnPopStyle}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
+                                            <TextBlock Text="满屏" Style="{StaticResource tbStyle}"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Style="{StaticResource btnPopStyle}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
+                                            <TextBlock Text="删除" Style="{StaticResource tbStyle}"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Style="{StaticResource btnPopStyle}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
+                                            <TextBlock Text="合并" Style="{StaticResource tbStyle}"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Style="{StaticResource btnPopStyle}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
+                                            <TextBlock Text="拆分" Style="{StaticResource tbStyle}"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Style="{StaticResource btnPopStyle}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
+                                            <TextBlock Text="行列" Style="{StaticResource tbStyle}"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </StackPanel>
+                    </Popup>
+                    <Popup Placement="Top" PlacementTarget="{Binding ElementName=btnSetting}" AllowsTransparency="True"
+                   PopupAnimation="Fade" IsOpen="{Binding IsVisibilitySetting}" StaysOpen="False">
+                        <StackPanel>
+                            <Button Style="{StaticResource btnPopStyle}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
+                                            <TextBlock Text="静音" Style="{StaticResource tbStyle}"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Style="{StaticResource btnPopStyle}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
+                                            <TextBlock Text="音量" Style="{StaticResource tbStyle}"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Style="{StaticResource btnPopStyle}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
+                                            <TextBlock Text="扫一扫" Style="{StaticResource tbStyle}"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Style="{StaticResource btnPopStyle}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
+                                            <TextBlock Text="二维码" Style="{StaticResource tbStyle}"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Style="{StaticResource btnPopStyle}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
+                                            <TextBlock Text="特效" Style="{StaticResource tbStyle}"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Style="{StaticResource btnPopStyle}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
+                                            <TextBlock Text="IP地址" Style="{StaticResource tbStyle}"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Style="{StaticResource btnPopStyle}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Image Source="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Uniform"/>
+                                            <TextBlock Text="换背景" Style="{StaticResource tbStyle}"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </StackPanel>
+                    </Popup>
+                </StackPanel>
+            </Border>
         </Grid>
+        
     </Grid>
 </UserControl>

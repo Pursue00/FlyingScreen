@@ -3,7 +3,8 @@
                     xmlns:cv="clr-namespace:FlyingScreen.Common"
                     xmlns:local="clr-namespace:FlyingScreen.Style">
     <Style x:Key="template" TargetType="ListBox">
-        <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
