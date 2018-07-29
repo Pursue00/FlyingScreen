@@ -1,4 +1,5 @@
 ﻿using FlyingScreen.Common;
+using FlyingScreen.Common.SendMessageHelper;
 using FlyingScreen.Model;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -17,6 +19,7 @@ namespace FlyingScreen.UC
     {
         #region Fileds
         public RelayCommand<object> BtnCommand { get; private set; }
+        public RelayCommand<object> SelectedPageCommand { get; private set; }
         ObservableCollection<MediaItem> thumbnailCollection = new ObservableCollection<MediaItem>();
         ObservableCollection<int> speedList = new ObservableCollection<int>();
         ObservableCollection<int> positionList = new ObservableCollection<int>();
@@ -40,6 +43,14 @@ namespace FlyingScreen.UC
             set { _isVisibilitySetting = value; OnPropertyChanged(() => IsVisibilitySetting); }
         }
 
+        private ImageSource _CameraSource;
+
+        public ImageSource CameraSource
+        {
+            get { return _CameraSource; }
+            set { _CameraSource = value; OnPropertyChanged(() => CameraSource); }
+        }
+        
         private ObservableCollection<SignBrowseSouce> _SignBrowseSource;
 
         public ObservableCollection<SignBrowseSouce> SignBrowseSource
@@ -53,6 +64,7 @@ namespace FlyingScreen.UC
         public UCThirdViewModel()
         {
             this.BtnCommand = new RelayCommand<object>(BtnCommandExcute);
+            this.SelectedPageCommand = new RelayCommand<object>(SelectedPageCommandExcute);
             InitializationData();
             string camera = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LocalFile", "Video");
             //ImportMediaThreadProc(System.IO.Path.Combine(camera, "自我兑现的预言.mp4"), 4, 1);
@@ -73,28 +85,38 @@ namespace FlyingScreen.UC
                 foreach (var item in _info.GetFiles().Reverse())
                 {
                     string url = System.IO.Path.Combine(camera, item.Name);
-                    _SignBrowseSouce.Add(new SignBrowseSouce { CameraImgUrl = url, Width = 240.0, Height = 240.0 });
+                    _SignBrowseSouce.Add(new SignBrowseSouce { CameraImgUrl = url, Width = 200.0, Height = 200.0 });
                 }
             }
            
             SignBrowseSource = new ObservableCollection<SignBrowseSouce>(_SignBrowseSouce);
         }
 
+        public void SelectedPageCommandExcute(object arg)
+        {
+            var item = ((ListBox)arg).SelectedItem as SignBrowseSouce;
+            if (item != null)
+            {
+                this.CameraSource = item.CameraSource;
+            }
+        }
+
         public void BtnCommandExcute(object arg)
         {
+            AppMessage appMessage = new AppMessage();
             switch (arg)
             {
                 case "exit":
-                    this.IsVisibilityRank = true;
+                    System.Diagnostics.Process.GetCurrentProcess().Kill();
                     break;
                 case "rotate":
-                    this.IsVisibilityRank = true;
+
                     break;
                 case "recycling":
-                    this.IsVisibilityRank = true;
+
                     break;
                 case "history":
-                    this.IsVisibilityRank = true;
+
                     break;
                 case "rank":
                     this.IsVisibilityRank = true;
@@ -103,10 +125,14 @@ namespace FlyingScreen.UC
                     this.IsVisibilitySetting = true;
                     break;
                 case "clear":
-                    this.IsVisibilityRank = true;
+
                     break;
                 case "return":
-                    this.IsVisibilityRank = true;
+
+                    break;
+                case "desktop":
+                    appMessage.MsgType = AppMsg.Desktop;
+                    EventHub.SysEvents.PubEvent<AppMessage>(appMessage);
                     break;
             }
         }

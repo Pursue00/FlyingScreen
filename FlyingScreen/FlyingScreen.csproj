@@ -95,6 +95,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\BitmapEncoderHelper.cs" />
+    <Compile Include="Common\ListBoxSelectedItemsBehavior.cs" />
     <Compile Include="Common\SendMessageHelper\AppMessage.cs" />
     <Compile Include="Common\SendMessageHelper\AppMsg.cs" />
     <Compile Include="Common\SendMessageHelper\EventHub.cs" />
@@ -220,6 +221,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Image\软件文档底图.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\桌面返回键.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Image\色环全.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

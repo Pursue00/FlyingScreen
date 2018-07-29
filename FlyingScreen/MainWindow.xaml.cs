@@ -38,12 +38,33 @@ namespace FlyingScreen
         {
             if (appMessage.MsgType == AppMsg.FileType)
             {
+                switch (appMessage.Tag.ToString())
+                {
+                    case "PDF":
+                        break;
+                    case "Word":
+                        break;
+                    case "视频":
+                        break;
+                    case "图片":
+                        break;
+                    case "PPT":
+                        break;
+                    case "Excel":
+                        break;
+                    case "网站":
+                        break;
+                }
                 this.ucthird.Visibility = Visibility.Visible;
             }
             else if (appMessage.MsgType == AppMsg.Palm)
             {
-                
+
                 this.coolbtn.Visibility = Visibility.Visible;
+            }
+            else if (appMessage.MsgType==AppMsg.Desktop)
+            {
+                this.WindowState = WindowState.Minimized;
             }
         }
     }

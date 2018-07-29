@@ -16,6 +16,6 @@ namespace FlyingScreen.Common.SendMessageHelper
         Word,
         Picture,
         Excel,
-       
+        Desktop,//桌面
     }
 }

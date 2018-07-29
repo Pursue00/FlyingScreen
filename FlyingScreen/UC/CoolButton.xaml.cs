@@ -89,8 +89,10 @@ namespace FlyingScreen.UC
         private void CoolButton_Loaded(object sender, RoutedEventArgs e)
         {
             //注册帧动画
-            CompositionTarget.Rendering += CompositionTarget_Rendering;
+            //CompositionTarget.Rendering += CompositionTarget_Rendering;
+           
             InitStar();
+            AddOrRemoveStarLine();
         }
 
         private void CompositionTarget_Rendering(object sender, EventArgs e)
@@ -115,10 +117,10 @@ namespace FlyingScreen.UC
                 double size = _random.Next(_starSizeMin, _starSizeMax + 1);//星星尺寸
                 StarInfo starInfo = new StarInfo()
                 {
-                    X = _random.Next(0, (int)cvs_starContainer.ActualWidth),
+                    X = _random.Next(0, 1024),
                     XV = (double)_random.Next(-_starVMax, _starVMax) / 60,
                     XT = _random.Next(6, 301),//帧
-                    Y = _random.Next(0, (int)cvs_starContainer.ActualHeight),
+                    Y = _random.Next(0, 500),
                     YV = (double)_random.Next(-_starVMax, _starVMax) / 60,
                     YT = _random.Next(6, 301),//帧
                     StarLines = new Dictionary<StarInfo, Line>()
@@ -145,7 +147,7 @@ namespace FlyingScreen.UC
                 Canvas.SetTop(star, starInfo.Y);
                 starInfo.StarRef = star;
                 //设置星星旋转动画
-                SetStarRotateAnimation(star);
+                //SetStarRotateAnimation(star);
                 //添加到容器
                 _stars[i] = starInfo;
                 cvs_starContainer.Children.Add(star);
@@ -154,13 +156,21 @@ namespace FlyingScreen.UC
 
         private void Star_Click(object sender, RoutedEventArgs e)
         {
+
             ImageBrush imageBrush = new ImageBrush();
             imageBrush.ImageSource = new BitmapImage(new Uri("Image/单独按下按钮.png", UriKind.Relative));
             Button star = sender as Button;
             star.Background = imageBrush;
-            AppMessage appMessage = new AppMessage();
-            appMessage.MsgType = AppMsg.FileType;
-            EventHub.SysEvents.PubEvent(appMessage);
+            Button button = sender as Button;
+            if (button != null)
+            {
+               
+                AppMessage appMessage = new AppMessage();
+                appMessage.Tag = button.Content;
+                appMessage.MsgType = AppMsg.FileType;
+                EventHub.SysEvents.PubEvent(appMessage);
+            }
+           
         }
 
         /// <summary>

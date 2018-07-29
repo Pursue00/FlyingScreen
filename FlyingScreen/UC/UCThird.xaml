@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviors="clr-namespace:FlyingScreen.Common"
              xmlns:local="clr-namespace:FlyingScreen.UC"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -32,18 +33,35 @@
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <Grid>
-            <Grid HorizontalAlignment="Right" VerticalAlignment="Center" MinHeight="250" MinWidth="100">
+            <Button Style="{StaticResource btnPopStyle}" Width="100" Height="80" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Source="pack://siteoforigin:,,,/Image/色环全.png" Stretch="Uniform"/>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding CameraSource}" Width="400" Height="300" Stretch="Uniform"></Image>
+            <Grid HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,80,0,0"  MinWidth="100">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
-                <ListBox MinHeight="200" MinWidth="100" VerticalAlignment="Center" HorizontalAlignment="Center">
+               
+                <ListBox  MinWidth="100" VerticalAlignment="Stretch"  HorizontalAlignment="Center" BorderBrush="{x:Null}" >
                     <ListBox.Background>
                         <ImageBrush ImageSource="pack://siteoforigin:,,,/Image/软件文档底图.png"/>
                     </ListBox.Background>
                 </ListBox>
                 <Grid Grid.Column="1">
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Command="{Binding BtnCommand}" CommandParameter="desktop"
+                            Style="{StaticResource btnPopStyle}" Width="100" Height="80" VerticalAlignment="Top" Margin="0,20,0,0">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="pack://siteoforigin:,,,/Image/桌面返回键.png" Stretch="Uniform"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,140,0,0">
                         <Button Style="{StaticResource btnPopStyle}" Height="50">
                             <Button.Template>
                                 <ControlTemplate>
@@ -87,6 +105,9 @@
             <Border BorderThickness="1" BorderBrush="#ffffff" 
                 Grid.Column="0">
                 <StackPanel Orientation="Horizontal" >
+                    <StackPanel.Background>
+                        <ImageBrush  ImageSource="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Fill"/>
+                    </StackPanel.Background>
                     <Button Command="{Binding BtnCommand}" CommandParameter="exit" >
                         <Button.Template>
                             <ControlTemplate>
@@ -131,9 +152,18 @@
             </Border>
             <Border BorderThickness="1" BorderBrush="#ffffff" Grid.Column="1"
                 >
-                <ListBox x:Name="listBoxview" 
+                <ListBox x:Name="listBoxview" ScrollViewer.CanContentScroll="True" ScrollViewer.IsDeferredScrollingEnabled="True"
+                          SelectionMode="Single" 
                      ItemsSource="{Binding SignBrowseSource}"  Style="{StaticResource template}"
                   ItemContainerStyle="{StaticResource itemTemplate}">
+                    <i:Interaction.Behaviors>
+                        <behaviors:ListBoxSelectedItemsBehavior/>
+                    </i:Interaction.Behaviors>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseUp">
                             <i:InvokeCommandAction Command="{Binding DataContext.SelectedPageCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl},AncestorLevel=1}}" 
@@ -148,15 +178,14 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
-                                <Border Name="border" Width="20"  Height="20" CornerRadius="5" BorderBrush="Transparent" BorderThickness="1" Margin="10">
-                                    <Image Source="{Binding CameraSource}" Stretch="Fill"  Width="{Binding Width}"  Height="{Binding Height}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="0"/>
-                                </Border>
+                                <Image Source="{Binding CameraSource}" Stretch="Uniform" Margin="5,0,5,0"  
+                                           Width="{Binding Width}"  Height="{Binding Height}"/>
                             </Grid>
-                            <DataTemplate.Triggers>
+                            <!--<DataTemplate.Triggers>
                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBoxItem},Path=IsSelected}" Value="True">
                                     <Setter TargetName="border" Property="Background" Value="Red"/>
                                 </DataTrigger>
-                            </DataTemplate.Triggers>
+                            </DataTemplate.Triggers>-->
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -164,6 +193,9 @@
             <Border BorderThickness="1" BorderBrush="#ffffff" 
                 Grid.Column="2">
                 <StackPanel Orientation="Horizontal">
+                    <StackPanel.Background>
+                        <ImageBrush  ImageSource="pack://siteoforigin:,,,/Image/菜单单独按钮.png" Stretch="Fill"/>
+                    </StackPanel.Background>
                     <Button x:Name="btnRank" Command="{Binding BtnCommand}" CommandParameter="rank">
                         <Button.Template>
                             <ControlTemplate>
